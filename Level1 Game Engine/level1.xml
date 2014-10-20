@@ -1,0 +1,126 @@
+<data>
+	<maininfo wid="10"  hit="10" x="1" y="9"/>
+	<wall>
+		<grid x="0" y="0" upwall="true" leftwall="true" />
+		<grid x="0" y="1" upwall="false" leftwall="true" />
+		<grid x="0" y="2" upwall="false" leftwall="true" />
+		<grid x="0" y="3" upwall="false" leftwall="true" />
+		<grid x="0" y="4" upwall="true" leftwall="true" />
+		<grid x="0" y="5" upwall="false" leftwall="true" />
+		<grid x="0" y="6" upwall="false" leftwall="true" />
+		<grid x="0" y="7" upwall="true" leftwall="true" />
+		<grid x="0" y="8" upwall="false" leftwall="true" />
+		<grid x="0" y="9" upwall="false" leftwall="true" />
+		<grid x="1" y="0" upwall="true" leftwall="false" />
+		<grid x="1" y="1" upwall="false" leftwall="false" />
+		<grid x="1" y="2" upwall="false" leftwall="false" />
+		<grid x="1" y="3" upwall="false" leftwall="false" />
+		<grid x="1" y="4" upwall="true" leftwall="false" />
+		<grid x="1" y="5" upwall="false" leftwall="false" />
+		<grid x="1" y="6" upwall="false" leftwall="false" />
+		<grid x="1" y="7" upwall="true" leftwall="false" />
+		<grid x="1" y="8" upwall="false" leftwall="false" />
+		<grid x="1" y="9" upwall="false" leftwall="false" />
+		<grid x="2" y="0" upwall="true" leftwall="false" />
+		<grid x="2" y="1" upwall="false" leftwall="false" />
+		<grid x="2" y="2" upwall="false" leftwall="false" />
+		<grid x="2" y="3" upwall="false" leftwall="false" />
+		<grid x="2" y="4" upwall="false" leftwall="false" />
+		<grid x="2" y="5" upwall="false" leftwall="false" />
+		<grid x="2" y="6" upwall="false" leftwall="false" />
+		<grid x="2" y="7" upwall="true" leftwall="false" />
+		<grid x="2" y="8" upwall="false" leftwall="false" />
+		<grid x="2" y="9" upwall="false" leftwall="false" />
+		<grid x="3" y="0" upwall="true" leftwall="false" />
+		<grid x="3" y="1" upwall="false" leftwall="false" />
+		<grid x="3" y="2" upwall="false" leftwall="false" />
+		<grid x="3" y="3" upwall="false" leftwall="false" />
+		<grid x="3" y="4" upwall="false" leftwall="false" />
+		<grid x="3" y="5" upwall="false" leftwall="false" />
+		<grid x="3" y="6" upwall="false" leftwall="false" />
+		<grid x="3" y="7" upwall="true" leftwall="false" />
+		<grid x="3" y="8" upwall="false" leftwall="false" />
+		<grid x="3" y="9" upwall="false" leftwall="false" />
+		<grid x="4" y="0" upwall="true" leftwall="false" />
+		<grid x="4" y="1" upwall="false" leftwall="false" />
+		<grid x="4" y="2" upwall="false" leftwall="false" />
+		<grid x="4" y="3" upwall="false" leftwall="false" />
+		<grid x="4" y="4" upwall="true" leftwall="false" />
+		<grid x="4" y="5" upwall="false" leftwall="false" />
+		<grid x="4" y="6" upwall="false" leftwall="false" />
+		<grid x="4" y="7" upwall="true" leftwall="false" />
+		<grid x="4" y="8" upwall="false" leftwall="false" />
+		<grid x="4" y="9" upwall="false" leftwall="false" />
+		<grid x="5" y="0" upwall="true" leftwall="false" />
+		<grid x="5" y="1" upwall="false" leftwall="false" />
+		<grid x="5" y="2" upwall="false" leftwall="false" />
+		<grid x="5" y="3" upwall="false" leftwall="false" />
+		<grid x="5" y="4" upwall="true" leftwall="false" />
+		<grid x="5" y="5" upwall="false" leftwall="false" />
+		<grid x="5" y="6" upwall="false" leftwall="false" />
+		<grid x="5" y="7" upwall="false" leftwall="false" />
+		<grid x="5" y="8" upwall="false" leftwall="false" />
+		<grid x="5" y="9" upwall="false" leftwall="false" />
+		<grid x="6" y="0" upwall="true" leftwall="false" />
+		<grid x="6" y="1" upwall="false" leftwall="false" />
+		<grid x="6" y="2" upwall="false" leftwall="false" />
+		<grid x="6" y="3" upwall="false" leftwall="false" />
+		<grid x="6" y="4" upwall="true" leftwall="false" />
+		<grid x="6" y="5" upwall="false" leftwall="false" />
+		<grid x="6" y="6" upwall="false" leftwall="false" />
+		<grid x="6" y="7" upwall="false" leftwall="false" />
+		<grid x="6" y="8" upwall="false" leftwall="false" />
+		<grid x="6" y="9" upwall="false" leftwall="false" />
+		<grid x="7" y="0" upwall="true" leftwall="false" />
+		<grid x="7" y="1" upwall="false" leftwall="false" />
+		<grid x="7" y="2" upwall="false" leftwall="false" />
+		<grid x="7" y="3" upwall="false" leftwall="false" />
+		<grid x="7" y="4" upwall="true" leftwall="false" />
+		<grid x="7" y="5" upwall="false" leftwall="false" />
+		<grid x="7" y="6" upwall="false" leftwall="false" />
+		<grid x="7" y="7" upwall="false" leftwall="false" />
+		<grid x="7" y="8" upwall="false" leftwall="false" />
+		<grid x="7" y="9" upwall="true" leftwall="true" />
+		<grid x="8" y="0" upwall="true" leftwall="false" />
+		<grid x="8" y="1" upwall="false" leftwall="false" />
+		<grid x="8" y="2" upwall="false" leftwall="false" />
+		<grid x="8" y="3" upwall="false" leftwall="false" />
+		<grid x="8" y="4" upwall="true" leftwall="false" />
+		<grid x="8" y="5" upwall="false" leftwall="false" />
+		<grid x="8" y="6" upwall="false" leftwall="false" />
+		<grid x="8" y="7" upwall="false" leftwall="false" />
+		<grid x="8" y="8" upwall="false" leftwall="false" />
+		<grid x="8" y="9" upwall="false" leftwall="true" />
+		<grid x="9" y="0" upwall="true" leftwall="false" />
+		<grid x="9" y="1" upwall="false" leftwall="false" />
+		<grid x="9" y="2" upwall="false" leftwall="false" />
+		<grid x="9" y="3" upwall="false" leftwall="false" />
+		<grid x="9" y="4" upwall="true" leftwall="false" />
+		<grid x="9" y="5" upwall="false" leftwall="false" />
+		<grid x="9" y="6" upwall="false" leftwall="false" />
+		<grid x="9" y="7" upwall="false" leftwall="false" />
+		<grid x="9" y="8" upwall="false" leftwall="false" />
+		<grid x="9" y="9" upwall="false" leftwall="false" />
+	</wall>
+	
+	
+	<specialsymbol>
+
+		<specobj type="fire" x="3" y="6" hit="3" />
+		<specobj type="fire" x="4" y="6" hit="3" />
+
+		<specobj type="block" x="0" y="9"/>
+		<specobj type="block" x="1" y="6"/>
+		
+		<specobj type="cluebutton" x="9" y="9" clueno="1"/>
+		<specobj type="cluebutton" x="4" y="5" clueno="2"/>
+		<specobj type="cluebutton" x="1" y="4" clueno="3"/>
+		<specobj type="cluebutton" x="0" y="2" clueno="4"/>
+		<specobj type="cluebutton" x="9" y="2" clueno="5"/>
+		
+		<specobj type="button" x="4" y="6" />
+		
+		<specobj type="invisiblewall" x="3" y="7" />
+
+	</specialsymbol>
+</data>
