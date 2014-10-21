@@ -8,9 +8,19 @@
 	import com.greensock.TweenLite;
 	import com.greensock.easing.Linear;
 	import flash.display.BitmapData;
-
+	
+	/**
+	 *	@author Nihav Jain
+	 *	@class LacunaWall - contains level map data and movement logic functions
+	 */
 	public class LacunaWall extends Sprite
 	{
+		/**
+		 *	level mep is stored as a matrix of upwall and left wall
+		 * 	level is divided into grids of 40x40px,
+		 * 	each grid having a top horizontal wall (upwall) and a left vertical wall (leftwall)
+		 * 	thus covering the entire level
+		 */
 		private var upwall:Vector.<Vector.<Boolean >  > ;
 		public var leftwall:Vector.<Vector.<Boolean >  > ;
 		
@@ -40,17 +50,17 @@
 		public var pany:uint;
 		
 		private var leftLimit:int;
-		private var rightLimit:int;
-		//var movingRight:Boolean;
-		
-		//var invisible:invisi = new invisi();
-		
+		private var rightLimit:int;		
 
 		public var _nocorrans:Array;
 
+		/**
+		 *	@constructor invoked by FLA
+		 *	@param {XML} _xml - xml containing level design
+		 *	@param {Array} nocorrans - array containing the data for clues (answered/unanswered)
+		 */
 		public function LacunaWall(_xml:XML, nocorrans:Array)
 		{
-			// constructor code
 			xml2 = _xml;
 			_nocorrans = nocorrans;
 			
@@ -63,14 +73,6 @@
 			var i:uint;
 			var j:uint;
 			
-			//lacunaMan.x = parseInt(_xml.maininfo. @x) * wid;
-			//lacunaMan.y = parseInt(_xml.maininfo. @y) * hit;
-			/*addChild(invisible);
-			invisible.x = parseInt(xml2.invisiwall.@x)*gridwid;
-			invisible.y = parseInt(xml2.invisiwall.@y)*gridhit;
-			invisible.visible = false;*/
-
-			
 			for (i = 0; i<=wid; i++)
 			{
 				upwall[i] = new Vector.<Boolean>(hit+1, true);
@@ -82,19 +84,19 @@
 					leftwall[i][j] = false;
 				}
 			}
-			
+			// top and bottom boundary of the level			
 			for (i=0; i<wid; i++)
 			{
 				upwall[i][0] = true;
 				upwall[i][hit] = true;
 			}
-			//trace("ok");
+			// left and right boundary of the level
 			for(i=0; i<hit; i++)
 			{
 				leftwall[0][i] = true;
 				leftwall[wid][i] = true;
 			}
-			
+			// constructing walls and floors of level based on xml
 			for each (var gridblock in _xml.wall.grid)
 			{
 				if (gridblock. @ upwall == "true")
@@ -144,6 +146,7 @@
 			var clc:uint = 0;
 			var iw:int = 0;
 			
+			// special objects in the level
 			firearm = new Vector.<MovieClip > (_xml.specialsymbol.specobj.(@type == "fire").length(),true);
 			crates = new Vector.<Block>(_xml.specialsymbol.specobj.(@type == "block").length(), true);
 			clue = new Vector.<Cluegif>(_xml.specialsymbol.specobj.(@type == "cluebutton").length(), true);
@@ -151,11 +154,8 @@
 			
 			for each (var specobj:XML in _xml.specialsymbol.specobj)
 			{
-				
-				//trace("adc");
 				if(specobj.@type == "fire")
 				{
-					//trace("shshsh");
 					firearm[fc]=new fireblock();
 					addChild(firearm[fc]);
 					firearm[fc].x = parseInt(specobj. @ x) * gridwid;
@@ -167,7 +167,6 @@
 					{
 						gridProperties[i][j]="fire";
 					}
-					//trace("fire ok");
 				}
 				else if(specobj.@type == "cluebutton")
 				{
@@ -180,8 +179,6 @@
 						clue[clc].xgrid = parseInt(specobj.@x);
 						clue[clc].ygrid = parseInt(specobj.@y);
 						addChild(clue[clc]);
-						
-						//loadSWF[clc] = specobj.@loadswf;
 						gridProperties[parseInt(specobj.@x)][parseInt(specobj.@y)] = "clue";
 						clc++;
 					}
@@ -219,6 +216,10 @@
 			}
 		}  //constructor ends
 		
+		/**
+		 *	@method chaluKaro
+		 *	@desc sets the coordinates of the man
+		 */
 		public function chaluKaro():void
 		{
 			lacunaMan.x = parseInt(xml2.maininfo.@x)*gridwid;
@@ -227,6 +228,11 @@
 		
 		var mwall:int = 0;
 		
+		/**
+		 *	@method removeClue
+		 *	@desc removes given clue from level
+		 *	@param {uint} curclu - index of clu to remove
+		 */
 		public function removeClue(curclu:uint):void
 		{
 			this.removeChild(clue[curclu]);
@@ -246,7 +252,16 @@
 			clue = temp;
 			temp = null;
 		}
-		//MOVEMENT FUNCTIONS : 
+		
+		/****** MOVEMENT FUNCTIONS ******/
+		
+		/**
+		 *	@method checkMoveLeft
+		 *	@desc checks if object at given coordinates can move left
+		 *	@param {int} a - x coordinate
+		 *	@param {int} b - y coordinate
+		 *	@return boolean
+		 */
 		function checkMoveLeft(a:int,b:int):Boolean
 		{
 			if(Math.floor((a-lacunaMan.moveFactor)/40) != int(a/40))
@@ -284,9 +299,15 @@
 				}
 			}
 			return false;
-			
 		}
 
+		/**
+		 *	@method checkMoveRight
+		 *	@desc checks if object at given coordinates can move right
+		 *	@param {int} a - x coordinate
+		 *	@param {int} b - y coordinate
+		 *	@return boolean
+		 */
 		function checkMoveRight(a:int, b:int):Boolean
 		{
 			if((leftwall[(int)((a+lacunaMan.moveFactor-1)/40)+1][(int)(b/40)] == false) && (leftwall[(int)((a+lacunaMan.moveFactor-1)/40)+1][(int)((b+38)/40)] == false))
@@ -303,7 +324,6 @@
 						}
 						else
 						{
-							//trace(1);
 							return false;
 						}
 					}
@@ -320,9 +340,16 @@
 					}
 				}
 			}
-			//trace(2);
 			return false;
 		}
+		
+		/**
+		 *	@method checkMoveLeftbx
+		 *	@desc checks if block at given coordinates can move left
+		 *	@param {int} a - x coordinate
+		 *	@param {int} b - y coordinate
+		 *	@return boolean
+		 */
 		function checkMoveLeftbx(a:int,b:int):Boolean
 		{
 			if(Math.floor((a-lacunaMan.moveFactor)/40) != int(a/40))
@@ -339,7 +366,6 @@
 					var ileft:uint = blockOnLeft(a, b);
 					if((blockOnLeft(crates[ileft].x, b) == -1) && ( (Math.floor((crates[ileft].x-lacunaMan.moveFactor)/40) == int(crates[ileft].x/40)) || (leftwall[(int)(crates[ileft].x/40)][b/40] == false) ) && (checkBlockUnder(crates[ileft].x, b-80) == false))
 					{
-						//crates[ileft].x -= lacunaMan.moveFactor;
 						return true;
 					}
 					else
@@ -362,6 +388,13 @@
 			return false;
 		}
 
+		/**
+		 *	@method checkMoveRightbx
+		 *	@desc checks if block at given coordinates can move right
+		 *	@param {int} a - x coordinate
+		 *	@param {int} b - y coordinate
+		 *	@return boolean
+		 */
 		function checkMoveRightbx(a:int, b:int):Boolean
 		{
 			if((leftwall[(int)((a+lacunaMan.moveFactor-1)/40)+1][(int)(b/40)] == false) && (leftwall[(int)((a+lacunaMan.moveFactor-1)/40)+1][(int)((b+38)/40)] == false))
@@ -373,12 +406,10 @@
 						var irit:uint = blockOnRight(a, b);
 						if((blockOnRight(crates[irit].x, b) == -1) && (leftwall[(int)((crates[irit].x+lacunaMan.moveFactor-1)/40)+1][(b/40)] == false) && (checkBlockUnder(crates[irit].x, b-80) == false))
 						{
-							//crates[irit].x += lacunaMan.moveFactor;
 							return true;
 						}
 						else
 						{
-							//trace(1);
 							return false;
 						}
 					}
@@ -395,9 +426,16 @@
 					}
 				}
 			}
-			trace(2);
 			return false;
 		}
+		
+		/**
+		 *	@method checkMoveUp
+		 *	@desc checks if object at given coordinates can move up
+		 *	@param {int} a - x coordinate
+		 *	@param {int} b - y coordinate
+		 *	@return boolean
+		 */
 		function checkMoveUp(a:int,b:int):int
 		{
 			var xc:int=(int)(a/40);
@@ -428,11 +466,19 @@
 			return 80;
 		}
 		
+		/**
+		 *	@method isFalling
+		 *	@desc determines if element at given coordinates is falling or not (have floor below them or not)
+		 *	@param {int} a - x coordinate
+		 *	@param {int} b - y coordinate
+		 *	@return boolean
+		 */
 		public function isFalling(a:int, b:int):Boolean
 		{
-			
+			// if given x coordinate lies inside 1 grid only
 			if(a%40 == 0)
 			{
+				// then if there is a horizontal just below, return false
 				if(upwall[int(a/40)][int(b/40) + 1] == true)
 				{
 					return false;
@@ -444,6 +490,8 @@
 			}
 			else
 			{
+				// if object does not lies in more than 1 grid
+				// check horizontal wall in both grids, and vertical wall in the intersection
 				if((upwall[int(a/40)][int(b/40) + 1] == false) && (upwall[int((a+40)/40)][int(b/40) + 1] == false) && (leftwall[int((a+40)/40)][int(b/40) + 1] == false))
 				{
 					return true;
@@ -452,11 +500,18 @@
 				{
 					return false;
 				}
-			}			
-			
+			}
 		}
 		
-		// BLOCK FUNCTIONS:	
+		/******** BLOCK FUNCTIONS ********/
+		
+		/**
+		 *	@method blockOnLeft
+		 *	@desc checks if there is a block to left of given coordinates
+		 *	@param {int} a - x coordinate
+		 *	@param {int} b - y coordinate
+		 *	@return int - index of block on left, -1 if no block on left
+		 */
 		function blockOnLeft(a:int, b:int):int
 		{
 			var i:int;
@@ -472,7 +527,13 @@
 			}
 			return -1;
 		}
-		
+		/**
+		 *	@method blockOnRight
+		 *	@desc checks if there is a block to right of given coordinates
+		 *	@param {int} a - x coordinate
+		 *	@param {int} b - y coordinate
+		 *	@return int - index of block on right, -1 if no block on right
+		 */		
 		function blockOnRight(a:int, b:int):int
 		{
 			var i:int;
@@ -488,7 +549,14 @@
 			}
 			return -1;
 		}
-
+		
+		/**
+		 *	@method checkBlockUnder
+		 *	@desc checks if there is a block under the given object
+		 *	@param {int} a - x coordinate
+		 *	@param {int} b - y coordinate
+		 *	@return boolean
+		 */
 		public function checkBlockUnder(a:int, b:int):Boolean
 		{
 			var i:int;
@@ -505,6 +573,13 @@
 			return false;
 		}
 		
+		/**
+		 *	@method blockOnLeftPick
+		 *	@desc checks if there is a block to left of given coordinates can be picked
+		 *	@param {int} a - x coordinate
+		 *	@param {int} b - y coordinate
+		 *	@return int - index of pickable block, -1 if no block on left
+		 */
 		function blockOnLeftPick(a:int, b:int):int
 		{
 			var i:int;
@@ -521,6 +596,13 @@
 			return -1;
 		}
 		
+		/**
+		 *	@method blockOnRightPick
+		 *	@desc checks if there is a block to right of given coordinates can be picked
+		 *	@param {int} a - x coordinate
+		 *	@param {int} b - y coordinate
+		 *	@return int - index of pickable block, -1 if no block on right
+		 */
 		function blockOnRightPick(a:int, b:int):int
 		{
 			var i:int;
@@ -537,13 +619,19 @@
 			return -1;
 		}
 		
+		/**
+		 *	@method pickBlock
+		 *	@desc picks the block, if possible, for given location of man
+		 *	@param {int} a - x coordinate
+		 *	@param {int} b - y coordinate
+		 *	@return int - index of picked block, -1 if no block is picked
+		 */
 		function pickBlock(a:int, b:int):int
 		{
 			var blockIndexL:int;
 			var blockIndexR:int;
-			var blockIndexUL:int;
-			var blockIndexUR:int;
-			
+			var blockIndexUL:int;	// UL: Upper Left
+			var blockIndexUR:int;	// UR: Upper Right
 			
 			blockIndexL = blockOnLeftPick(a, b);
 			blockIndexR = blockOnRightPick(a, b);
@@ -600,11 +688,14 @@
 			return -1;
 		}
 		
-		// DEATH ANIMATION FUNCTIONS : 	
+		/******** DEATH ANIMATION FUNCTIONS ********/
 		
+		/**
+		 *	@method addDeath
+		 *	@desc adds black rectangle for fading to black
+		 */
 		function addDeath():void
-		{
-			
+		{			
 			death.width = wid * gridwid;
 			death.height = hit * gridwid;
 			
@@ -615,13 +706,17 @@
 			death.y = 0;
 		}
 		
+		/**
+		 *	@method addBurnt
+		 *	@desc adds burnt man image in position of man
+		 *	@param {int} a - x coordinate
+		 *	@param {int} b - y coordinate
+		 */
 		function addBurnt(a:int, b:int):void
 		{
 			brAlien.x = a;
 			brAlien.y = b;
 			addChild(brAlien);
 		}
-		
-		
 	}
 }
