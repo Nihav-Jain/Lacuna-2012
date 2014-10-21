@@ -1,5 +1,4 @@
 ﻿package  {
-	//import flash.display.Shape;
 	import flash.display.BitmapData;
 	import flash.display.MovieClip;
 	
@@ -13,8 +12,6 @@
 		public var temp:uint;
 
 		public function ClueSym() {
-			// constructor code
-			//clueno = no;
 			isFirst = true;
 		}
 	}
