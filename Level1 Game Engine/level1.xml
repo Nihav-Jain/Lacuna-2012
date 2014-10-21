@@ -102,10 +102,7 @@
 		<grid x="9" y="8" upwall="false" leftwall="false" />
 		<grid x="9" y="9" upwall="false" leftwall="false" />
 	</wall>
-	
-	
 	<specialsymbol>
-
 		<specobj type="fire" x="3" y="6" hit="3" />
 		<specobj type="fire" x="4" y="6" hit="3" />
 
@@ -118,9 +115,7 @@
 		<specobj type="cluebutton" x="0" y="2" clueno="4"/>
 		<specobj type="cluebutton" x="9" y="2" clueno="5"/>
 		
-		<specobj type="button" x="4" y="6" />
-		
+		<specobj type="button" x="4" y="6" />		
 		<specobj type="invisiblewall" x="3" y="7" />
-
 	</specialsymbol>
 </data>
