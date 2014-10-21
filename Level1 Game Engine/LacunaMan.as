@@ -9,7 +9,11 @@
 	import flash.geom.Rectangle;
 	import flash.display.Loader;
 	import flash.net.URLRequest;
-
+	
+	/**
+	 *	@author Nihav Jain
+	 *	@class LacunaMan - controls the movement and logic for man
+	 */
 	public class LacunaMan extends MovieClip
 	{
 		var jumping:Boolean;
@@ -29,13 +33,14 @@
 		var dropBoxDir:String;
 		public var restartfunc:Function;
 		
-		
 		private var startFalling:uint = 0;
 		public var lacunaWall:LacunaWall;
 
+		/**
+		 *	@constructor
+		 */
 		public function LacunaMan()
 		{
-			// constructor code
 			jumping = false;
 			moveFactor = 4;
 			isleft = false;
@@ -48,9 +53,12 @@
 			dropBoxDir = "";
 			midAirCount = 0;
 			this.stop();
-			
 		}
 		
+		/**
+		 *	@method startListening
+		 *	@desc adds the key event and enter frame event listeners
+		 */
 		public function startListening():void
 		{
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, keyEvent, false, 0);
@@ -67,6 +75,10 @@
 			}
 		}
 		
+		/**
+		 *	@method stopListening
+		 *	@desc removes the key event and enter frame listeners
+		 */
 		public function stopListening():void
 		{
 			stage.removeEventListener(KeyboardEvent.KEY_DOWN, keyEvent);
@@ -74,32 +86,37 @@
 			this.removeEventListener(Event.ENTER_FRAME, move_man);
 		}
 
+		/**
+		 *	@method keyEvent
+		 *	@desc listener for KEY_DOWN Event for man movement
+		 */
 		function keyEvent(ev:KeyboardEvent):void
 		{
-			// MAN MOVEMENT
-			if (ev.keyCode == 37)
+			/***** MAN MOVEMENT *****/
+			if (ev.keyCode == 37)	// left key
 			{
 				isleft = lacunaWall.checkMoveLeft(this.x,this.y);
 				this.play();
 			}
-			if (ev.keyCode == 39)
+			if (ev.keyCode == 39)	// right key
 			{
 				isright = lacunaWall.checkMoveRight(this.x,this.y);
 				this.play();
 			}
+			// cannot jump when man has picked up a block
 			if(blockPickedUp == false)
 			{
-				if (jumping == false && ev.keyCode == 38 && isFaling == false && startFalling != 1)
+				// cannot jump when in air
+				if (jumping == false && ev.keyCode == 38 && isFaling == false && startFalling != 1)	// up key
 				{
 					isup = true;
 					jumping = true;
 					moveFactor = 12;
 					midAirCount = 0;
-					
 				}
 			}
 			
-			//TO PICK UP BLOCK
+			/***** TO PICK UP BLOCK *****/
 			if(ev.shiftKey)
 			{
 				if(blockPickedUp == false)
@@ -113,29 +130,37 @@
 				else
 				{
 					blockPickedUp = !dropBlock();
-					//trace(blockPickedUp);
 					if(blockPickedUp == false)
 						pickedBlockIndex = -1;
 				}
 			}
-			if(ev.ctrlKey)
+			if(ev.ctrlKey)	// for debugging purpose
 			{
 				trace(x, y);
 			}
 		}
 		
+		/**
+		 *	@method isPaning
+		 *	@desc scroll rect function for following the character around the level
+		 */
 		private function isPaning():void
 		{
 			lacunaWall.scrollRect = new Rectangle(lacunaWall.panx, lacunaWall.pany, 400, 400);
 		}
 
+		/**
+		 *	@method returnFromClue
+		 *	@desc removes clue from stage, adds event listeners to resume gameplay
+		 *	@param {boolean} anscorrectly
+		 */
 		public function returnFromClue(anscorrectly:Boolean):void
 		{
 			if(anscorrectly == true)
 			{
 				lacunaWall.removeClue(curClueI);
 				lacunaWall._nocorrans[curClueOn] = 1;
-				if(curClueOn == 2)
+				if(curClueOn == 2)	// only for level 1
 				{
 					lacunaWall.invisiWall[0].removeWall();
 				}
@@ -149,6 +174,10 @@
 		public var showClueBut:Function;
 		public var disposeBut:Function;
 		
+		/**
+		 *	@method move_man
+		 *	@desc called on every frame, main man logic, MOST IMPORTANT
+		 */
 		function move_man(ev:Event):void
 		{
 			var i:int;
@@ -158,6 +187,7 @@
 			
 			if(isup)
 			{
+				// midAirCount = man will go up for 2 seconds, then fall
 				if((lacunaWall.checkMoveUp(this.x, this.y) >= 20) && (midAirCount < 2))
 				{
 					this.y -= 20;
@@ -171,11 +201,12 @@
 			
 			for(i=0; i<lacunaWall.firearm.length;i++)
 			{
-				//lacunaWall.firearm[i].fire.visible = true;
 				lacunaWall.firearm[i].fire.height = 120;
 			}
+			/***** Check grid properties *****/
 			if(lacunaWall.gridProperties[int((x+38)/40)][int(y/40)] == "fire")
 			{
+				// block on head protects man from fire
 				if(blockPickedUp == false)
 				{
 					for(i=0; i<lacunaWall.firearm.length;i++)
@@ -202,7 +233,6 @@
 						dist = lacunaWall.firearm[i].x - this.x;
 						if(dist > -40 && dist < 40)
 						{
-							//lacunaWall.firearm[i].fire.visible = false;
 							lacunaWall.firearm[i].fire.height = 40;
 						}
 					}
@@ -236,7 +266,6 @@
 						dist = lacunaWall.firearm[i].x - this.x;
 						if((dist > -40) && (dist < 40))
 						{
-							//lacunaWall.firearm[i].fire.visible = false;
 							lacunaWall.firearm[i].fire.height = 40;
 						}
 					}
@@ -252,7 +281,6 @@
 						{
 							if(lacunaWall.firearm[i].getStatus(this.y - lacunaWall.firearm[i].y) == true)
 							{
-								//lacunaWall.firearm[i].maskheight = 80;
 								lacunaWall.firearm[i].fire.visible = false;
 								break;
 							}
@@ -283,7 +311,6 @@
 			
 			if((lacunaWall.gridProperties[int(x/40)][int(y/40)] == "clue") || (lacunaWall.gridProperties[int((x+38)/40)][int(y/40)] == "clue") || (lacunaWall.gridProperties[int(x/40)][int((y+38)/40)] == "clue") || (lacunaWall.gridProperties[int((x+38)/40)][int((y+38)/40)] == "clue"))
 			{
-				//trace("show clue");
 				for(i=0; i<lacunaWall.clue.length; i++)
 				{
 					if(((lacunaWall.clue[i].xgrid == int(x/40)) || (lacunaWall.clue[i].xgrid == int((x+38)/40))) && ((lacunaWall.clue[i].ygrid == int(y/40)) || (lacunaWall.clue[i].ygrid == int((y+38)/40))))
@@ -296,9 +323,7 @@
 							this.removeEventListener(KeyboardEvent.KEY_DOWN, keyEvent);
 							this.removeEventListener(KeyboardEvent.KEY_UP, stop_walk);
 							lacunaWall.clue[i].isFirst = false;
-							
 							clueFunc.call(this,curClueOn);
-							
 							return;
 						}
 						else
@@ -307,7 +332,6 @@
 							lacunaWall.clue[i].temp = 0;
 							TweenLite.killTweensOf(lacunaWall.clue[i]);
 							TweenLite.to(lacunaWall.clue[i], 2, {temp:10, onComplete:disposeBut});
-							//TweenLite.delayedCall(2, disposeBut);
 						}
 						break;
 					}
@@ -370,12 +394,21 @@
 
 		}  //func end
 
-		// MOVEMENT RELATED FUNCTIONS:
+		/******* MOVEMENT RELATED FUNCTIONS *******/
+		
+		/**
+		 *	@method comeDown
+		 *	@desc calls method addKeyUp
+		 */
 		function comeDown():void
 		{
 			TweenLite.delayedCall(0.1, addKeyUp);
 		}
-
+		
+		/**
+		 *	@method addKeyUp
+		 *	@desc resets falling/jumping state to normal walking
+		 */
 		function addKeyUp():void
 		{
 			moveFactor = 4;
@@ -384,6 +417,10 @@
 			isup = false;
 		}
 		
+		/**
+		 *	@method stop_walk
+		 *	@desc listener for KEY_UP event
+		 */
 		function stop_walk(evt:KeyboardEvent):void
 		{
 			if (evt.keyCode == 37)
@@ -400,29 +437,31 @@
 			}
 		}
 		
-		
+		/**
+		 *	@method deathAnime
+		 *	@desc removes event listeners, prepares for death
+		 */
 		function deathAnime():void
 		{
 			lacunaWall.addDeath();
-			//a.visible = false;
 			disposeBut.call(this);
 			this.removeEventListener(KeyboardEvent.KEY_DOWN, keyEvent);
 			this.removeEventListener(Event.ENTER_FRAME, move_man);
 			this.removeEventListener(KeyboardEvent.KEY_UP, stop_walk);
 			TweenLite.to(lacunaWall.death, 2, {alpha:1, onComplete: restartfunc});
-			//trace("ok1");
 		}
 		
-		
+		/**
+		 *	@method dropBlock
+		 *	@desc drop the block being carried (if possible) in last direction of movement (left/right)
+		 *	@return boolean - if block was successfully dropped or not
+		 */
 		function dropBlock():Boolean
 		{
 			if(isleft == false && isright == false)
 			{
-				//trace("should drop");
-				//trace(dropBoxDir);
 				if(dropBoxDir == "left")
 				{
-					//trace("left");
 					var z:uint;
 					for(z = 0; z<10; z++)
 					{
@@ -436,7 +475,6 @@
 				}
 				else if(dropBoxDir == "right")
 				{
-					//trace("right");
 					for(z = 0; z<10; z++)
 					{
 						if(lacunaWall.checkMoveRight(lacunaWall.crates[pickedBlockIndex].x + z*4, lacunaWall.crates[pickedBlockIndex].y) == false)
