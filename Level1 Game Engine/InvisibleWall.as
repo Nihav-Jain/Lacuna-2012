@@ -4,6 +4,10 @@
 	import flash.events.TimerEvent;
 	import flash.display.BitmapData;
 	
+	/**
+	 *	@author Nihav Jain
+	 *	@class InvisibleWall - wall which gets enabled/disabled based on gameplay
+	 */
 	public class InvisibleWall extends Sprite
 	{
 		var xa:int;
@@ -11,21 +15,26 @@
 		
 		public var lacunawall:LacunaWall;
 		var mwall:int = 0;
-		public var isConcrete:Boolean;
+		public var isConcrete:Boolean;	// if wall is now active
 		public var hasBeenSet:Boolean;
 		
-		
+		/**
+		 *	@constructor
+		 *	@param {int} a - x coordinate
+		 *	@param {int} b - y coordinate
+		 */
 		public function InvisibleWall(a:int,b:int) 
 		{
-			
 			hasBeenSet = true;
 			xa=a;
 			yb=b;
 			isConcrete = false;
 		}
 		
-		
-		
+		/**
+		 *	@method makeWall
+		 *	@desc makes the wall solid i.e. enables the wall
+		 */
 		public function makeWall():void
 		{
 			
@@ -42,6 +51,11 @@
 			isConcrete = true;
 			hasBeenSet = true;
 		}
+		
+		/**
+		 *	@method removeWall
+		 *	@desc disables the wall
+		 */
 		public function removeWall():void
 		{
 			hasBeenSet = true;
@@ -52,7 +66,5 @@
 			this.graphics.clear();
 			isConcrete = false;
 		}
-		
 	}
-	
 }
