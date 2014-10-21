@@ -10,12 +10,20 @@
 	import flash.ui.ContextMenuItem;
 	import flash.events.ContextMenuEvent;
 	
-	public class CluePic extends Sprite{
+	/**
+	 *	@author Nihav Jain
+	 *	@class CluePic - container for the clue image
+	 */
+	public class CluePic extends Sprite
+	{
 		private var _bmpd:BitmapData;
 		private var saveImage:ContextMenuItem;
-
+		
+		/**
+		 *	@constructor
+		 *	@param {BitmapData} bmpd - bitmap data for the image to be shown
+		 */
 		public function CluePic(bmpd:BitmapData) {
-			// constructor code
 			_bmpd = bmpd;
 			var hit:uint = bmpd.height;
 			var wid:uint = bmpd.width;
@@ -44,6 +52,10 @@
 			this.contextMenu = cm;
 		}
 		
+		/**
+		 *	@method saveTheImage
+		 *	@desc saves the displayed image as jpeg
+		 */
 		private function saveTheImage(ev:Event):void
 		{
 			var enc:JPGEncoder = new JPGEncoder(100);
@@ -52,6 +64,10 @@
 			file.save(ba, "image.jpg");
 		}
 		
+		/**
+		 *	@method dispose
+		 *	@desc adds the event listener for the right click context menu
+		 */
 		public function dispose():void
 		{
 			saveImage.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, saveTheImage);
